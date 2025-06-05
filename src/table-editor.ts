@@ -4,6 +4,8 @@ import { EDITOR_TO_SELECTION, EDITOR_TO_WITH_TABLE_OPTIONS } from "./weak-maps";
 import { Editor, Location, Node, NodeEntry, Path, Transforms } from "slate";
 import { TableCursor } from "./table-cursor";
 import { filledMatrix, hasCommon, isElement, isOfType } from "./utils";
+import { moveRow, moveColumn } from "./drag-drop";
+import { canMoveRow, canMoveColumn } from "./utils/move-validation";
 
 export const TableEditor = {
   /**
@@ -843,5 +845,55 @@ export const TableEditor = {
         }
       }
     });
+  },
+  /**
+   * Moves a row from one position to another within the same table.
+   * @param editor The editor instance
+   * @param options Move options containing from/to indices and optional location
+   * @returns boolean indicating if the move was successful
+   */
+  moveRow(
+    editor: Editor,
+    options: { from: number; to: number; at?: Location },
+  ): boolean {
+    return moveRow(editor, options);
+  },
+  /**
+   * Moves a column from one position to another within the same table.
+   * @param editor The editor instance
+   * @param options Move options containing from/to indices and optional location
+   * @returns boolean indicating if the move was successful
+   */
+  moveColumn(
+    editor: Editor,
+    options: { from: number; to: number; at?: Location },
+  ): boolean {
+    return moveColumn(editor, options);
+  },
+  /**
+   * Checks if a row can be moved.
+   * @param editor The editor instance
+   * @param options Options containing row index and optional location
+   * @returns boolean indicating if the row can be moved
+   */
+  canMoveRow(
+    editor: Editor,
+    options: { rowIndex: number; at?: Location },
+  ): boolean {
+    const result = canMoveRow(editor, options);
+    return result.canMove;
+  },
+  /**
+   * Checks if a column can be moved.
+   * @param editor The editor instance
+   * @param options Options containing column index and optional location
+   * @returns boolean indicating if the column can be moved
+   */
+  canMoveColumn(
+    editor: Editor,
+    options: { columnIndex: number; at?: Location },
+  ): boolean {
+    const result = canMoveColumn(editor, options);
+    return result.canMove;
   },
 };

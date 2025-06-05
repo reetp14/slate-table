@@ -1,0 +1,378 @@
+/* Drag Handle Styles */
+.drag-handle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  user-select: none;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+
+.drag-handle:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+.drag-handle--disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.drag-handle--disabled:hover {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.drag-handle__icon {
+  font-size: 12px;
+  line-height: 1;
+  color: #6b7280;
+  font-weight: bold;
+  letter-spacing: -1px;
+}
+
+.drag-handle__icon--disabled {
+  color: #d1d5db;
+}
+
+.drag-handle--row {
+  width: 20px;
+  height: 100%;
+  min-height: 24px;
+  margin-right: 4px;
+}
+
+.drag-handle--column {
+  height: 20px;
+  width: 100%;
+  min-width: 24px;
+  margin-bottom: 4px;
+}
+
+/* Drop Zone Styles */
+.drop-zone {
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.drop-zone--valid {
+  background-color: rgba(34, 197, 94, 0.1);
+  border: 2px dashed #22c55e;
+  border-radius: 4px;
+}
+
+.drop-zone--invalid {
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 2px dashed #ef4444;
+  border-radius: 4px;
+}
+
+.drop-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 500;
+  z-index: 10;
+  pointer-events: none;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.drop-indicator--valid {
+  color: #22c55e;
+  border: 1px solid #22c55e;
+}
+
+.drop-indicator--invalid {
+  color: #ef4444;
+  border: 1px solid #ef4444;
+}
+
+/* Table Enhancement for Drag and Drop */
+.table-with-drag-drop {
+  position: relative;
+}
+
+.table-row-with-drag-handle {
+  position: relative;
+}
+
+.table-row-with-drag-handle::before {
+  content: "";
+  position: absolute;
+  left: -24px;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+  background-color: transparent;
+}
+
+.table-column-with-drag-handle {
+  position: relative;
+}
+
+.table-column-with-drag-handle::before {
+  content: "";
+  position: absolute;
+  top: -24px;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background-color: transparent;
+}
+
+/* Dragging States */
+.table-dragging .drag-handle:not(.drag-handle--source) {
+  opacity: 0.3;
+}
+
+.drag-handle--source {
+  opacity: 0.8;
+  background-color: rgba(59, 130, 246, 0.2);
+  border-color: #3b82f6;
+}
+
+/* Add smooth transitions for all table elements */
+table tr,
+table td,
+table th {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.table-row--dragging {
+  opacity: 0.8;
+  background-color: rgba(59, 130, 246, 0.2) !important;
+  border: 2px solid #3b82f6;
+  transform: scale(1.02);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  position: relative;
+}
+
+.table-column--dragging {
+  opacity: 0.8;
+  background-color: rgba(59, 130, 246, 0.2) !important;
+  border: 2px solid #3b82f6;
+  transform: scale(1.02);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  position: relative;
+}
+
+/* Highlight entire row when dragging */
+.table-row--dragging td,
+.table-row--dragging th {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+  border-color: #3b82f6 !important;
+}
+
+/* Highlight entire column when dragging */
+.table-column--dragging {
+  position: relative;
+}
+
+.table-column--dragging::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(59, 130, 246, 0.1);
+  border: 2px solid #3b82f6;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Animation for rows/columns that will be shifted */
+.table-row--will-shift-up {
+  transform: translateY(-4px);
+  background-color: rgba(34, 197, 94, 0.05);
+}
+
+.table-row--will-shift-down {
+  transform: translateY(4px);
+  background-color: rgba(34, 197, 94, 0.05);
+}
+
+.table-column--will-shift-left {
+  transform: translateX(-4px);
+  background-color: rgba(34, 197, 94, 0.05);
+}
+
+.table-column--will-shift-right {
+  transform: translateX(4px);
+  background-color: rgba(34, 197, 94, 0.05);
+}
+
+/* Drop zone preview animations */
+.drop-zone--valid {
+  background-color: rgba(34, 197, 94, 0.1);
+  border: 2px dashed #22c55e;
+  border-radius: 4px;
+  animation: pulse-valid 1.5s infinite;
+}
+
+.drop-zone--invalid {
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 2px dashed #ef4444;
+  border-radius: 4px;
+  animation: pulse-invalid 1.5s infinite;
+}
+
+@keyframes pulse-valid {
+  0%,
+  100% {
+    background-color: rgba(34, 197, 94, 0.1);
+    border-color: #22c55e;
+  }
+  50% {
+    background-color: rgba(34, 197, 94, 0.2);
+    border-color: #16a34a;
+  }
+}
+
+@keyframes pulse-invalid {
+  0%,
+  100% {
+    background-color: rgba(239, 68, 68, 0.1);
+    border-color: #ef4444;
+  }
+  50% {
+    background-color: rgba(239, 68, 68, 0.2);
+    border-color: #dc2626;
+  }
+}
+
+/* Smooth insertion point indicator */
+.drop-insertion-indicator {
+  position: absolute;
+  background-color: #3b82f6;
+  border-radius: 2px;
+  z-index: 20;
+  animation: fade-in 0.2s ease-out;
+}
+
+.drop-insertion-indicator--row {
+  height: 3px;
+  left: 0;
+  right: 0;
+}
+
+.drop-insertion-indicator--column {
+  width: 3px;
+  top: 0;
+  bottom: 0;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .drag-handle--row {
+    width: 16px;
+    margin-right: 2px;
+  }
+
+  .drag-handle--column {
+    height: 16px;
+    margin-bottom: 2px;
+  }
+
+  .drag-handle__icon {
+    font-size: 10px;
+  }
+
+  .drop-indicator {
+    font-size: 11px;
+    padding: 3px 6px;
+  }
+}
+
+/* Accessibility enhancements */
+.drag-handle:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.drag-handle[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+/* Animation for successful drops */
+@keyframes drop-success {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.table-row--drop-success,
+.table-column--drop-success {
+  animation: drop-success 0.3s ease-out;
+}
+
+/* Ghost image styling for better drag feedback */
+.drag-ghost {
+  opacity: 0.8;
+  background-color: rgba(59, 130, 246, 0.1);
+  border: 2px dashed #3b82f6;
+  border-radius: 4px;
+  padding: 8px;
+  font-weight: 500;
+  color: #3b82f6;
+}
+
+/* Drag handle cell styles */
+.drag-handle-cell {
+  width: 30px;
+  min-width: 30px;
+  max-width: 30px;
+  padding: 0 !important;
+  border: none !important;
+  background-color: #f8fafc;
+  vertical-align: middle;
+  position: relative;
+}
+
+.drag-handle-cell:hover {
+  background-color: #f1f5f9;
+}
+
+/* Ensure the table layout accommodates drag handles */
+.table-with-drag-drop {
+  table-layout: fixed;
+}
+
+.table-with-drag-drop .drag-handle-cell + td,
+.table-with-drag-drop .drag-handle-cell + th {
+  border-left: 1px solid #d1d5db;
+}
